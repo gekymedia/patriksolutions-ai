@@ -13,9 +13,10 @@
                     <a href="{{ route('courses.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-play"></i> Browse Courses</a>
                     @auth
                         <a href="{{ route('dashboard') }}" class="ai-btn ai-btn-outline"><i class="fas fa-chart-line"></i> My Learning</a>
-                    @else
-                        <a href="{{ route('register') }}" class="ai-btn ai-btn-outline"><i class="fas fa-user-plus"></i> Start Free</a>
-                    @endauth
+        @else
+            <a href="{{ route('register') }}" class="ai-btn ai-btn-outline"><i class="fas fa-user-plus"></i> Create Account</a>
+            <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-crown"></i> Become a Member</a>
+        @endauth
                 </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block">
@@ -59,6 +60,14 @@
         @else
             <p class="text-muted text-center py-5">Courses coming soon.</p>
         @endif
+    </div>
+</section>
+
+<section class="ai-hero" style="padding: 4rem 0;">
+    <div class="container ai-hero-content text-center">
+        <h2 class="fw-bold mb-3" style="font-size: 2rem;">Ready to start learning?</h2>
+        <p class="mx-auto mb-4" style="max-width: 520px;">Become a member to unlock all AI courses, your personal AI tutor, and progress tracking.</p>
+        <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary btn-lg"><i class="fas fa-crown"></i> View Membership Plans</a>
     </div>
 </section>
 @endsection

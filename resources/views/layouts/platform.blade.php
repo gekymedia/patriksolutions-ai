@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/ai-course.css') }}" rel="stylesheet">
+    @stack('head')
     @stack('styles')
 </head>
 <body class="ai-body">
@@ -34,6 +35,11 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}" href="{{ route('courses.index') }}">
                             <i class="fas fa-graduation-cap me-1"></i> Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('membership.*') ? 'active' : '' }}" href="{{ route('membership.index') }}" style="{{ !auth()->check() || auth()->user()->isFree() ? 'background: rgba(251,191,36,0.15); border-radius: 8px;' : '' }}">
+                            <i class="fas fa-crown me-1" style="color: #fbbf24;"></i> Become a Member
                         </a>
                     </li>
                     @auth

@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use Billable, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
+        'plan',
     ];
 
     protected $hidden = [
@@ -35,6 +37,45 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function currentPlan(): string
+    {
+        return $this->plan ?? 'free';
+    }
+
+    public function isPro(): bool
+    {
+        return in_array($this->currentPlan(), ['pro', 'elite']);
+    }
+
+    public function isElite(): bool
+    {
+        return $this->currentPlan() === 'elite';
+    }
+
+    public function hasActiveMembership(): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        if ($this->isFree()) {
+            return false;
+        }
+
+        return $this->subscribed('default') ||
+            ($this->subscription('default') && $this->subscription('default')->onGracePeriod());
+    }
+
+    public function hasCourseAccess(): bool
+    {
+        return $this->isAdmin() || $this->hasActiveMembership();
+    }
+
+    public function isFree(): bool
+    {
+        return $this->currentPlan() === 'free';
+    }
+
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class);
@@ -42,6 +83,14 @@ class User extends Authenticatable
 
     public function dailyTutorLimit(): int
     {
-        return $this->isAdmin() ? 999 : 50;
+        if ($this->isAdmin()) {
+            return 999;
+        }
+
+        return match ($this->currentPlan()) {
+            'elite' => 100,
+            'pro' => 50,
+            default => 5,
+        };
     }
 }

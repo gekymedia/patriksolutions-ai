@@ -51,6 +51,11 @@ class CourseController extends Controller
     {
         abort_unless($course->is_published, 404);
 
+        if (! Auth::user()->hasCourseAccess()) {
+            return redirect()->route('membership.index')
+                ->with('upgrade_message', 'Become a member to enroll in this course.');
+        }
+
         $userId = Auth::id();
 
         if ($course->isEnrolledBy($userId)) {

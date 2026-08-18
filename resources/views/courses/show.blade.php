@@ -34,11 +34,18 @@
                         @endif
                     @else
                         @auth
-                            <form action="{{ route('courses.enroll', $course) }}" method="POST">@csrf
-                                <button type="submit" class="ai-btn ai-btn-primary w-100 justify-content-center">Enroll Free</button>
-                            </form>
+                            @if(auth()->user()->hasCourseAccess())
+                                <form action="{{ route('courses.enroll', $course) }}" method="POST">@csrf
+                                    <button type="submit" class="ai-btn ai-btn-primary w-100 justify-content-center">Enroll Now</button>
+                                </form>
+                            @else
+                                <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
+                                    <i class="fas fa-crown"></i> Become a Member to Enroll
+                                </a>
+                            @endif
                         @else
-                            <a href="{{ route('login') }}" class="ai-btn ai-btn-primary w-100 justify-content-center">Login to Enroll</a>
+                            <a href="{{ route('login', ['redirect' => route('courses.show', $course)]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">Login to Enroll</a>
+                            <a href="{{ route('register', ['redirect' => route('membership.index')]) }}" class="ai-btn ai-btn-dark w-100 justify-content-center mt-2">Sign Up &amp; Join</a>
                         @endauth
                     @endif
                 </div>
