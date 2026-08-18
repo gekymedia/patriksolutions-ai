@@ -8,6 +8,7 @@
 @endpush
 
 @push('styles')
+<style>
     .membership-plan-card { height: 100%; display: flex; flex-direction: column; }
     .membership-plan-card.is-current { border: 2px solid var(--ai-primary); box-shadow: var(--ai-glow); }
     .membership-plan-card.is-featured { border: 2px solid var(--ai-primary); position: relative; }
