@@ -7,16 +7,20 @@
         <div class="row align-items-center">
             <div class="col-lg-7">
                 <div class="ai-badge"><i class="fas fa-robot"></i> ai.patriksolutions.com</div>
-                <h1>Master AI with Expert-Led Courses</h1>
-                <p>{{ config('platform.tagline') }}. Learn practical AI skills with hands-on lessons and your personal AI tutor on every lesson.</p>
+                <h1>
+                    Learn Artificial Intelligence.<br>
+                    Build Wealth.<br>
+                    Shape the Future.
+                </h1>
+                <p>Master practical AI skills, accelerate your career, automate your business, and make smarter financial decisions with expert-led training from Patrik Solutions.</p>
                 <div class="d-flex flex-wrap gap-3 mt-4">
                     <a href="{{ route('courses.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-play"></i> Browse Courses</a>
                     @auth
                         <a href="{{ route('dashboard') }}" class="ai-btn ai-btn-outline"><i class="fas fa-chart-line"></i> My Learning</a>
-        @else
-            <a href="{{ route('register') }}" class="ai-btn ai-btn-outline"><i class="fas fa-user-plus"></i> Create Account</a>
-            <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-crown"></i> Become a Member</a>
-        @endauth
+                    @else
+                        <a href="{{ route('register') }}" class="ai-btn ai-btn-outline"><i class="fas fa-user-plus"></i> Create Account</a>
+                        <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-crown"></i> Become a Member</a>
+                    @endauth
                 </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block">
