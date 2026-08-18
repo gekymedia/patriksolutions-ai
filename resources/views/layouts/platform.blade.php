@@ -14,6 +14,7 @@
     <link href="{{ asset('css/ai-course.css') }}" rel="stylesheet">
     @stack('head')
     @stack('styles')
+    @yield('styles')
 </head>
 <body class="ai-body">
     <nav class="ai-navbar navbar navbar-expand-lg">
