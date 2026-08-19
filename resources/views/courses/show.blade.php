@@ -1,5 +1,31 @@
 @extends('layouts.platform')
-@section('title', $course->name)
+@section('title', $course->name . ' — ' . config('platform.name'))
+@section('meta_description', Str::limit(strip_tags($course->description), 160))
+@section('og_type', 'article')
+@section('canonical_url', route('courses.show', $course))
+
+@push('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": @json($course->name),
+    "description": @json(strip_tags($course->description)),
+    "url": @json(route('courses.show', $course)),
+    "provider": {
+        "@type": "Organization",
+        "name": "{{ config('platform.parent_brand') }}",
+        "url": "{{ config('platform.url') }}"
+    },
+    "educationalLevel": @json(ucfirst($course->level)),
+    "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "PT{{ $course->lessons->count() }}H"
+    }
+}
+</script>
+@endpush
 
 @section('content')
 <section class="ai-section" style="padding-top: 2rem; background: #fff; border-bottom: 1px solid var(--ai-border);">

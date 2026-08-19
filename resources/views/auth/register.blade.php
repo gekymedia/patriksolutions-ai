@@ -1,5 +1,6 @@
 @extends('layouts.platform')
 @section('title', 'Create Account — ' . config('platform.name'))
+@section('meta_robots', 'noindex, nofollow')
 
 @section('content')
 <x-auth-card

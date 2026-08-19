@@ -1,5 +1,6 @@
 @extends('layouts.platform')
 @section('title', 'Reset Password — ' . config('platform.name'))
+@section('meta_robots', 'noindex, nofollow')
 
 @section('content')
 <x-auth-card

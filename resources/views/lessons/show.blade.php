@@ -1,5 +1,6 @@
 @extends('layouts.platform')
-@section('title', $lesson->title)
+@section('title', $lesson->title . ' — ' . $course->name)
+@section('meta_robots', 'noindex, nofollow')
 
 @section('footer')@endsection
 

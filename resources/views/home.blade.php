@@ -1,5 +1,34 @@
 @extends('layouts.platform')
 @section('title', config('platform.name') . ' — Learn AI Skills')
+@section('meta_description', 'Learn artificial intelligence, build wealth, and shape the future. Expert-led AI courses, AI tutor, video lessons, and progress tracking from Patrik Solutions.')
+@section('canonical_url', config('platform.url'))
+
+@push('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "name": "{{ config('platform.parent_brand') }}",
+            "url": "{{ config('platform.url') }}",
+            "logo": "{{ asset('assets/logos/patrick_logo.png') }}",
+            "sameAs": ["https://patriksolutions.com"]
+        },
+        {
+            "@type": "WebSite",
+            "name": "{{ config('platform.name') }}",
+            "url": "{{ config('platform.url') }}",
+            "description": @json(config('platform.seo.default_description')),
+            "publisher": {
+                "@type": "Organization",
+                "name": "{{ config('platform.parent_brand') }}"
+            }
+        }
+    ]
+}
+</script>
+@endpush
 
 @section('content')
 <section class="ai-hero">

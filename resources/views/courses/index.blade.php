@@ -1,5 +1,6 @@
 @extends('layouts.platform')
-@section('title', 'Courses — ' . config('platform.name'))
+@section('title', 'AI Courses — ' . config('platform.name'))
+@section('meta_description', 'Browse practical, hands-on AI training courses. Learn machine learning, automation, and real-world AI skills with expert-led lessons from Patrik Solutions.')
 
 @section('content')
 <section class="ai-section" style="padding-top: 3rem;">

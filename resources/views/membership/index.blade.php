@@ -1,5 +1,6 @@
 @extends('layouts.platform')
 @section('title', 'Become a Member — ' . config('platform.name'))
+@section('meta_description', 'Join Patrik Solutions AI membership for full access to expert-led AI courses, AI tutor support, and exclusive learning resources.')
 
 @push('head')
 @if(auth()->check() && $stripeConfigured)

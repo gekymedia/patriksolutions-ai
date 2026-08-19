@@ -1,5 +1,6 @@
 @extends('layouts.platform')
 @section('title', 'Profile — ' . config('platform.name'))
+@section('meta_robots', 'noindex, nofollow')
 
 @section('content')
 <section class="ai-section" style="padding-top: 3rem;">
