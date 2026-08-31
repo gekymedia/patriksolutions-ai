@@ -10,6 +10,8 @@ return [
 
     'parent_brand' => env('PARENT_BRAND', 'Patrik Solutions'),
 
+    'parent_url' => env('PARENT_SITE_URL', 'https://patriksolutions.com'),
+
     'seo' => [
         'default_description' => env(
             'APP_SEO_DESCRIPTION',

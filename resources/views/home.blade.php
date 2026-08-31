@@ -13,7 +13,7 @@
             "name": "{{ config('platform.parent_brand') }}",
             "url": "{{ config('platform.url') }}",
             "logo": "{{ asset('assets/logos/patrick_logo.png') }}",
-            "sameAs": ["https://patriksolutions.com"]
+            "sameAs": [@json(config('platform.parent_url'))]
         },
         {
             "@type": "WebSite",

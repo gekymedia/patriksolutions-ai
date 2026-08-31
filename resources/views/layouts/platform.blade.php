@@ -64,6 +64,11 @@
                     @endauth
                 </ul>
                 <ul class="navbar-nav align-items-lg-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="ai-btn ai-btn-outline ms-lg-2" href="{{ config('platform.parent_url') }}" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                            <i class="fas fa-external-link-alt"></i> {{ config('platform.parent_brand') }}
+                        </a>
+                    </li>
                     @auth
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -116,6 +121,11 @@
     <footer class="ai-footer mt-auto">
         <div class="container text-center">
             <p class="mb-0">&copy; {{ date('Y') }} {{ config('platform.parent_brand') }} — AI Learning Platform</p>
+            <p class="mb-0 mt-2">
+                <a href="{{ config('platform.parent_url') }}" class="text-white-50 text-decoration-none">
+                    <i class="fas fa-arrow-left me-1"></i> Back to {{ config('platform.parent_brand') }}
+                </a>
+            </p>
         </div>
     </footer>
     @endif
