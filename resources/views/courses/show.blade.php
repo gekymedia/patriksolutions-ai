@@ -40,6 +40,11 @@
         <div class="row g-4">
             <div class="col-lg-8">
                 <span class="ai-level-badge ai-level-{{ $course->level }}">{{ $course->level }}</span>
+                @unless($course->isFreePlan())
+                    <span class="badge {{ $canAccess ? 'bg-success' : 'bg-secondary' }} ms-1">@unless($canAccess)<i class="fas fa-lock"></i> @endunless{{ $course->tierLabel() }}</span>
+                @else
+                    <span class="badge bg-success ms-1">Free</span>
+                @endunless
                 <h1 class="fw-bold mt-2">{{ $course->name }}</h1>
                 <p class="text-muted">{{ $course->description }}</p>
                 @if($isEnrolled)
@@ -60,14 +65,19 @@
                         @endif
                     @else
                         @auth
-                            @if(auth()->user()->hasCourseAccess())
+                            @if($canAccess)
                                 <form action="{{ route('courses.enroll', $course) }}" method="POST">@csrf
                                     <button type="submit" class="ai-btn ai-btn-primary w-100 justify-content-center">Enroll Now</button>
                                 </form>
+                                @unless($course->isFreePlan())
+                                    <p class="small text-muted text-center mt-2 mb-0"><i class="fas fa-check-circle text-success"></i> Included in your {{ $course->tierLabel() }} plan.</p>
+                                @endunless
                             @else
+                                <p class="small text-center mb-2"><i class="fas fa-lock"></i> Requires <strong>{{ $course->tierLabel() }}</strong></p>
                                 <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
-                                    <i class="fas fa-crown"></i> Become a Member to Enroll
+                                    <i class="fas fa-crown"></i> {{ $course->requiredPlan() === 'elite' ? 'Upgrade to AI Pro' : 'Upgrade to AI Member' }}
                                 </a>
+                                <p class="small text-muted text-center mt-2 mb-0">{{ $upgradeMessage }}</p>
                             @endif
                         @else
                             <a href="{{ route('login', ['redirect' => route('courses.show', $course)]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">Login to Enroll</a>
@@ -84,16 +94,20 @@
         <h2 class="h5 fw-bold mb-3">Curriculum</h2>
         <div class="ai-card">
             @foreach($course->lessons as $i => $lesson)
+                @php $lessonOpen = $isEnrolled || $canAccess || $lesson->is_preview; @endphp
                 <div class="d-flex align-items-center p-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                     <span class="text-muted me-3">{{ $i + 1 }}</span>
                     <div class="flex-grow-1">
-                        <div class="fw-semibold">{{ $lesson->title }}</div>
+                        <div class="fw-semibold">
+                            {{ $lesson->title }}
+                            @if($lesson->is_preview && !$canAccess)<span class="badge bg-info text-dark ms-1">Free preview</span>@endif
+                        </div>
                         <div class="small text-muted">{{ Str::limit($lesson->description, 80) }}</div>
                     </div>
                     @if(in_array($lesson->id, $completedLessonIds))
                         <span class="badge bg-success">Done</span>
-                    @elseif($isEnrolled)
-                        <a href="{{ route('lessons.show', [$course, $lesson]) }}" class="ai-btn ai-btn-dark" style="padding: 0.375rem 0.875rem; font-size: 0.8125rem;">Start</a>
+                    @elseif($lessonOpen)
+                        <a href="{{ route('lessons.show', [$course, $lesson]) }}" class="ai-btn ai-btn-dark" style="padding: 0.375rem 0.875rem; font-size: 0.8125rem;">{{ ($lesson->is_preview && !$canAccess) ? 'Preview' : 'Start' }}</a>
                     @else
                         <i class="fas fa-lock text-muted"></i>
                     @endif
