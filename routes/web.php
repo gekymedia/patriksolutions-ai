@@ -30,15 +30,17 @@ Route::post('/stripe/webhook', '\Laravel\Cashier\Http\Controllers\WebhookControl
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [CourseController::class, 'dashboard'])->name('dashboard');
 
-    Route::post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])
-        ->middleware('member')
-        ->name('courses.enroll');
-
-    Route::middleware('member')->group(function () {
-        Route::get('/courses/{course:slug}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
-        Route::post('/courses/{course:slug}/lessons/{lesson}/complete', [LessonController::class, 'complete'])->name('lessons.complete');
-        Route::post('/courses/{course:slug}/lessons/{lesson}/tutor', [TutorController::class, 'chat'])->name('tutor.chat');
-    });
+    /*
+    | Per-course tier access is enforced inside the controllers (server-side):
+    |   - free course  -> any signed-in user
+    |   - pro / elite  -> active member of that tier (or admin)
+    |   - preview lessons -> any signed-in user, regardless of plan
+    | Hiding buttons is not enough; the controllers return 403 / redirect for locked content.
+    */
+    Route::post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/courses/{course:slug}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
+    Route::post('/courses/{course:slug}/lessons/{lesson}/complete', [LessonController::class, 'complete'])->name('lessons.complete');
+    Route::post('/courses/{course:slug}/lessons/{lesson}/tutor', [TutorController::class, 'chat'])->name('tutor.chat');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

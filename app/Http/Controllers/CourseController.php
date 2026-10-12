@@ -20,7 +20,11 @@ class CourseController extends Controller
             ? Enrollment::where('user_id', Auth::id())->pluck('course_id')->all()
             : [];
 
-        return view('courses.index', compact('courses', 'enrolledIds'));
+        // Which courses can the current viewer fully access (for lock badges).
+        $user = Auth::user();
+        $accessibleIds = $courses->filter(fn ($c) => $c->isAccessibleBy($user))->pluck('id')->all();
+
+        return view('courses.index', compact('courses', 'enrolledIds', 'accessibleIds'));
     }
 
     public function show(Course $course)
@@ -29,10 +33,14 @@ class CourseController extends Controller
 
         $course->load('lessons');
 
-        $isEnrolled = Auth::check() && $course->isEnrolledBy(Auth::id());
-        $progressPercent = Auth::check() ? $course->progressPercentFor(Auth::id()) : 0;
-        $completedLessonIds = Auth::check()
-            ? LessonProgress::where('user_id', Auth::id())
+        $user = Auth::user();
+        $canAccess = $course->isAccessibleBy($user);
+        $upgradeMessage = $course->upgradeMessage();
+
+        $isEnrolled = $user && $course->isEnrolledBy($user->id);
+        $progressPercent = $user ? $course->progressPercentFor($user->id) : 0;
+        $completedLessonIds = $user
+            ? LessonProgress::where('user_id', $user->id)
                 ->where('course_id', $course->id)
                 ->whereNotNull('completed_at')
                 ->pluck('lesson_id')
@@ -43,7 +51,9 @@ class CourseController extends Controller
             'course',
             'isEnrolled',
             'progressPercent',
-            'completedLessonIds'
+            'completedLessonIds',
+            'canAccess',
+            'upgradeMessage'
         ));
     }
 
@@ -51,20 +61,21 @@ class CourseController extends Controller
     {
         abort_unless($course->is_published, 404);
 
-        if (! Auth::user()->hasCourseAccess()) {
+        $user = Auth::user();
+
+        // Server-side gate: block enrollment if the user's plan can't access this course.
+        if (! $course->isAccessibleBy($user)) {
             return redirect()->route('membership.index')
-                ->with('upgrade_message', 'Become a member to enroll in this course.');
+                ->with('upgrade_message', $course->upgradeMessage());
         }
 
-        $userId = Auth::id();
-
-        if ($course->isEnrolledBy($userId)) {
+        if ($course->isEnrolledBy($user->id)) {
             return redirect()->route('courses.show', $course)
                 ->with('info', 'You are already enrolled in this course.');
         }
 
         Enrollment::create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'course_id' => $course->id,
         ]);
 
