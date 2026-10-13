@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PageController;
@@ -29,6 +30,11 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
 Route::get('/guides/{slug}', [GuideController::class, 'show'])->name('guides.show');
+
+// Lead magnet (free download for an email)
+Route::get('/free-guide', [LeadController::class, 'show'])->name('lead.show');
+Route::post('/free-guide', [LeadController::class, 'store'])->name('lead.store');
+Route::get('/free-guide/thank-you', [LeadController::class, 'thanks'])->name('lead.thanks');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/refund-policy', [PageController::class, 'refund'])->name('refund');

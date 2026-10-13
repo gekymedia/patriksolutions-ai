@@ -155,6 +155,7 @@
                     <ul class="list-unstyled small d-grid gap-2 mb-0">
                         <li><a href="{{ route('courses.index') }}" class="text-white-50 text-decoration-none">Courses</a></li>
                         <li><a href="{{ route('guides.index') }}" class="text-white-50 text-decoration-none">Guides</a></li>
+                        <li><a href="{{ route('lead.show') }}" class="text-white-50 text-decoration-none">Free AI Kit</a></li>
                         <li><a href="{{ route('membership.index') }}" class="text-white-50 text-decoration-none">Membership</a></li>
                         <li><a href="{{ route('faq') }}" class="text-white-50 text-decoration-none">FAQ</a></li>
                     </ul>

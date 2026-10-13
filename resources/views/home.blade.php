@@ -215,6 +215,24 @@
     </div>
 </section>
 
+{{-- ======================= LEAD MAGNET BAND ===================== --}}
+<section class="ai-section">
+    <div class="container">
+        <div class="ai-card p-4 p-lg-5" style="background: var(--ai-gradient); color:#fff;">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <div class="ai-badge mb-2" style="background: rgba(255,255,255,0.15); color:#fff;"><i class="fas fa-gift"></i> Free download</div>
+                    <h2 class="fw-bold mb-2" style="color:#fff;">{{ config('platform.lead_magnet.title') }}</h2>
+                    <p class="mb-0" style="color: rgba(255,255,255,0.9); max-width: 60ch;">{{ config('platform.lead_magnet.subtitle') }} Get the top AI skills, a prompt framework, and a 7-day plan.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="{{ route('lead.show') }}" class="ai-btn" style="background:#fff;color:var(--ai-primary);font-weight:700;"><i class="fas fa-download"></i> Get the free kit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{-- ======================= INSTRUCTOR BLOCK ====================== --}}
 <section class="ai-section" style="background: #fff; border-top: 1px solid var(--ai-border);">
     <div class="container">

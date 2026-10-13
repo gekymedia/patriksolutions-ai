@@ -44,6 +44,11 @@
         <priority>0.5</priority>
     </url>
     <url>
+        <loc>{{ route('lead.show') }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>{{ route('terms') }}</loc>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>

@@ -80,6 +80,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Lead magnet (free download in exchange for an email)
+    |--------------------------------------------------------------------------
+    | Delivered instantly on the thank-you page (no email infra needed). If a
+    | MailerLite API key + group are set, new leads are also pushed there so your
+    | welcome/nurture automation can run.
+    */
+    'lead_magnet' => [
+        'title'     => 'The AI Income Starter Kit',
+        'subtitle'  => 'A free, practical guide to using AI to earn more — no experience needed.',
+        'file'      => 'assets/downloads/ai-income-starter-kit.pdf',
+    ],
+
+    'mailerlite' => [
+        'api_key'  => env('MAILERLITE_API_KEY', ''),
+        'group_id' => env('MAILERLITE_GROUP_ID', ''),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Testimonials (trust)
     |--------------------------------------------------------------------------
     | Add REAL, named testimonials only. The testimonials section renders on the
