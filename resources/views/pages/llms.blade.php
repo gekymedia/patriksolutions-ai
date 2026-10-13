@@ -2,7 +2,7 @@
 
 > {{ config('platform.entity_sentence') }}
 
-{{ config('platform.name') }} ({{ config('platform.url') }}) offers practical, beginner-friendly online courses on how to make money with AI. It is built for learners in Ghana and the African diaspora, and is open to anyone worldwide. Courses are taught by {{ config('platform.instructor.name') }} — {{ config('platform.instructor.role') }} ({{ config('platform.instructor.credentials') }}).
+{{ config('platform.name') }} ({{ config('platform.url') }}) offers practical, beginner-friendly online courses on how to make money with AI. It is built for learners in Ghana and the African diaspora, and is open to anyone worldwide. Courses are taught by {{ config('platform.instructor.name') }} — {!! config('platform.instructor.role') !!} ({{ config('platform.instructor.credentials') }}).
 
 ## Courses & plans
 - Free account: full AI Fundamentals course (beginner, no coding), progress tracking, and preview lessons from other courses.
