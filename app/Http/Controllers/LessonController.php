@@ -18,24 +18,30 @@ class LessonController extends Controller
         $user = Auth::user();
         $hasFullAccess = $course->isAccessibleBy($user);
 
-        // Server-side gate: preview lessons are open to any signed-in user;
-        // every other lesson requires full course access for the user's tier.
+        // Server-side gate: preview lessons are open to EVERYONE (including guests,
+        // for a public first look); every other lesson requires full course access.
         if (! $lesson->is_preview && ! $hasFullAccess) {
+            if (! $user) {
+                return redirect()->route('register', ['redirect' => route('courses.show', $course)]);
+            }
+
             return redirect()->route('membership.index')
                 ->with('upgrade_message', $course->upgradeMessage());
         }
 
-        // Auto-enroll eligible users the first time they open a lesson, so progress is tracked.
-        if ($hasFullAccess && ! $course->isEnrolledBy($user->id)) {
+        // Auto-enroll eligible (signed-in) users the first time they open a lesson, so progress is tracked.
+        if ($user && $hasFullAccess && ! $course->isEnrolledBy($user->id)) {
             Enrollment::firstOrCreate(['user_id' => $user->id, 'course_id' => $course->id]);
         }
 
         $lessons = $course->lessons;
-        $completedLessonIds = LessonProgress::where('user_id', $user->id)
-            ->where('course_id', $course->id)
-            ->whereNotNull('completed_at')
-            ->pluck('lesson_id')
-            ->all();
+        $completedLessonIds = $user
+            ? LessonProgress::where('user_id', $user->id)
+                ->where('course_id', $course->id)
+                ->whereNotNull('completed_at')
+                ->pluck('lesson_id')
+                ->all()
+            : [];
 
         $currentIndex = $lessons->search(fn ($l) => $l->id === $lesson->id);
         $prevLesson = $currentIndex > 0 ? $lessons[$currentIndex - 1] : null;

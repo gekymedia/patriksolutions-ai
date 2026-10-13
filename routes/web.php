@@ -17,6 +17,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('courses.show');
 
+// Public lesson view. Access is enforced inside the controller:
+//   - preview lessons -> everyone (guests included), for a public first look
+//   - all other lessons -> redirect guests to sign up / members to upgrade
+Route::get('/courses/{course:slug}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
+
 // Static / informational pages (SEO + AEO + trust)
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
@@ -48,7 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     | Hiding buttons is not enough; the controllers return 403 / redirect for locked content.
     */
     Route::post('/courses/{course:slug}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
-    Route::get('/courses/{course:slug}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
     Route::post('/courses/{course:slug}/lessons/{lesson}/complete', [LessonController::class, 'complete'])->name('lessons.complete');
     Route::post('/courses/{course:slug}/lessons/{lesson}/tutor', [TutorController::class, 'chat'])->name('tutor.chat');
 

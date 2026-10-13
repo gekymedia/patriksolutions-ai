@@ -111,8 +111,14 @@
                                 <p class="small text-muted text-center mt-2 mb-0">{{ $upgradeMessage }}</p>
                             @endif
                         @else
-                            <a href="{{ route('login', ['redirect' => route('courses.show', $course)]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">Login to Enroll</a>
-                            <a href="{{ route('register', ['redirect' => route('membership.index')]) }}" class="ai-btn ai-btn-dark w-100 justify-content-center mt-2">Sign Up &amp; Join</a>
+                            @if($course->isFreePlan())
+                                <a href="{{ route('register', ['redirect' => route('courses.show', $course)]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center"><i class="fas fa-user-plus"></i> Sign up free &amp; enroll</a>
+                                <p class="small text-muted text-center mt-2 mb-0">Free course — no card required.</p>
+                            @else
+                                <a href="{{ route('register', ['redirect' => route('membership.index', ['plan' => $course->requiredPlan()])]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center"><i class="fas fa-crown"></i> {{ $course->requiredPlan() === 'elite' ? 'Get AI Pro — $' . config('platform.prices.elite') . '/mo' : 'Get AI Member — $' . config('platform.prices.pro') . '/mo' }}</a>
+                                <p class="small text-muted text-center mt-2 mb-0">{{ $upgradeMessage }}</p>
+                            @endif
+                            <a href="{{ route('login', ['redirect' => route('courses.show', $course)]) }}" class="ai-btn ai-btn-dark w-100 justify-content-center mt-2">Log in</a>
                         @endauth
                     @endif
                 </div>
@@ -120,6 +126,24 @@
         </div>
     </div>
 </section>
+@php $outcomes = config('platform.course_outcomes.' . $course->slug, []); @endphp
+@if(!empty($outcomes))
+<section class="ai-section" style="padding-bottom: 0;">
+    <div class="container">
+        <h2 class="h5 fw-bold mb-3">What you'll be able to do</h2>
+        <div class="row g-3">
+            @foreach($outcomes as $outcome)
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start gap-3 p-3 ai-card">
+                        <i class="fas fa-circle-check mt-1" style="color: var(--ai-primary);"></i>
+                        <span>{{ $outcome }}</span>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 <section class="ai-section">
     <div class="container">
         <h2 class="h5 fw-bold mb-3">Curriculum</h2>

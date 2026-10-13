@@ -49,8 +49,8 @@ return [
     */
     'contact' => [
         'email'         => env('CONTACT_EMAIL', 'patriksolutions@gmail.com'),
-        'whatsapp'      => env('CONTACT_WHATSAPP', ''),            // digits only, no + or spaces
-        'whatsapp_label'=> env('CONTACT_WHATSAPP_LABEL', ''),      // pretty label e.g. +233 20 000 0000
+        'whatsapp'      => env('CONTACT_WHATSAPP', '17039811910'),      // digits only, for wa.me (country code + number)
+        'whatsapp_label'=> env('CONTACT_WHATSAPP_LABEL', '+1 (703) 981-1910'),
     ],
 
     /*
@@ -88,6 +88,36 @@ return [
     |   ['quote' => '...', 'name' => 'Ama O.', 'detail' => 'Freelancer, Accra'],
     */
     'testimonials' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Course outcomes ("What you'll be able to do"), keyed by course slug
+    |--------------------------------------------------------------------------
+    | Shown on the course detail page. Keep in sync with the seeded courses.
+    */
+    'course_outcomes' => [
+        'ai-fundamentals' => [
+            'Understand what AI and generative AI really are — in plain English',
+            'Write clear, effective prompts that get useful results',
+            'Use ChatGPT, Claude and Gemini confidently for everyday tasks',
+            'Spot where AI can save you time and money',
+            'Use AI responsibly and avoid common beginner mistakes',
+        ],
+        'ai-for-business' => [
+            'Draft emails, proposals and reports in minutes',
+            'Create marketing copy, social posts and images with AI',
+            'Speed up research, planning and customer replies',
+            'Build simple workflows that automate repetitive tasks',
+            'Offer AI-powered services clients will pay for',
+        ],
+        'advanced-ai-strategies' => [
+            'Design advanced prompting systems and multi-step workflows',
+            'Build custom AI assistants and agents for real tasks',
+            'Connect AI to tools and data (including optional APIs and RAG)',
+            'Apply AI governance, safety and quality controls',
+            'Ship a capstone project you can show clients or employers',
+        ],
+    ],
 
     'seo' => [
         'default_description' => env(

@@ -44,7 +44,8 @@
     </form>
 
     <p class="text-center small text-muted mt-3 mb-0">
-        By signing up you agree to our terms. Course access may require an active membership.
+        By signing up you agree to our <a href="{{ route('terms') }}" class="ai-auth-link">Terms</a> and
+        <a href="{{ route('privacy') }}" class="ai-auth-link">Privacy Policy</a>. Course access may require an active membership.
     </p>
 
     <x-slot:footer>

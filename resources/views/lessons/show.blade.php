@@ -5,6 +5,11 @@
 @section('footer')@endsection
 
 @section('content')
+@php
+    // CTA destinations differ by course tier and whether the viewer is signed in.
+    $signupUrl = route('register', ['redirect' => route('courses.show', $course)]);
+    $unlockUrl = $course->isFreePlan() ? $signupUrl : route('membership.index');
+@endphp
 <style>
 .lesson-md h1{font-size:1.6rem;margin:1.5rem 0 .6rem;font-weight:700}
 .lesson-md h2{font-size:1.3rem;margin:1.4rem 0 .5rem;font-weight:700}
@@ -31,7 +36,7 @@
         @foreach($lessons as $i => $l)
             @php $locked = ! $l->is_preview && ! $hasFullAccess; @endphp
             @if($locked)
-                <a href="{{ route('membership.index') }}" class="ai-lesson-item" title="Upgrade to unlock this lesson">
+                <a href="{{ $unlockUrl }}" class="ai-lesson-item" title="{{ $course->isFreePlan() ? 'Sign up free to unlock this lesson' : 'Upgrade to unlock this lesson' }}">
                     <span class="ai-lesson-check"><i class="fas fa-lock"></i></span>
                     <span>{{ $i + 1 }}. {{ Str::limit($l->title, 28) }}</span>
                 </a>
@@ -47,11 +52,19 @@
         <h1 class="fw-bold mb-3">{{ $lesson->title }}</h1>
         <p class="text-muted mb-4">{{ $lesson->description }}</p>
         @unless($hasFullAccess)
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4 p-3"
-                 style="background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:12px;">
-                <span><i class="fas fa-unlock-alt me-2"></i> You're viewing a <strong>free preview</strong>. Upgrade to unlock the full course, the AI tutor, and progress tracking.</span>
-                <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary">Upgrade</a>
-            </div>
+            @if($course->isFreePlan())
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4 p-3"
+                     style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#166534;border-radius:12px;">
+                    <span><i class="fas fa-gift me-2"></i> This is a <strong>free course</strong>. Create your free account to unlock all {{ $lessons->count() }} lessons and track your progress.</span>
+                    <a href="{{ $signupUrl }}" class="ai-btn ai-btn-primary"><i class="fas fa-user-plus"></i> Sign up free</a>
+                </div>
+            @else
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4 p-3"
+                     style="background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:12px;">
+                    <span><i class="fas fa-unlock-alt me-2"></i> You're viewing a <strong>free preview</strong>. Upgrade to unlock the full course, the AI tutor, and progress tracking.</span>
+                    <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary">See plans</a>
+                </div>
+            @endif
         @endunless
         @if($lesson->video_url)
             <div class="ai-video-wrapper">
@@ -77,6 +90,8 @@
                     @else
                         <span class="badge bg-success fs-6 py-2 px-3">Completed</span>
                     @endif
+                @elseif($course->isFreePlan())
+                    <a href="{{ $signupUrl }}" class="ai-btn ai-btn-primary"><i class="fas fa-user-plus"></i> Sign up free to continue</a>
                 @else
                     <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary"><i class="fas fa-unlock"></i> Upgrade to continue</a>
                 @endif
@@ -100,8 +115,8 @@
             </div>
         @else
             <div class="p-4 text-center">
-                <p class="text-muted small mb-3"><i class="fas fa-lock me-1"></i> The AI tutor is part of the full course.</p>
-                <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary w-100">Upgrade to unlock</a>
+                <p class="text-muted small mb-3"><i class="fas fa-lock me-1"></i> The AI tutor is included with AI Member &amp; AI Pro.</p>
+                <a href="{{ route('membership.index') }}" class="ai-btn ai-btn-primary w-100">See plans</a>
             </div>
         @endif
     </aside>
