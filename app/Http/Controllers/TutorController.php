@@ -14,8 +14,9 @@ class TutorController extends Controller
 {
     public function chat(Request $request, Course $course, Lesson $lesson)
     {
+        // The AI tutor requires full course access for the user's tier (preview-only viewers can't use it).
         abort_unless(
-            $lesson->course_id === $course->id && $course->isEnrolledBy(Auth::id()),
+            $lesson->course_id === $course->id && $course->isAccessibleBy(Auth::user()),
             403
         );
 

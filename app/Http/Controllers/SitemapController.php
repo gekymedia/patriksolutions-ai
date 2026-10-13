@@ -14,8 +14,10 @@ class SitemapController extends Controller
             ->orderBy('sort_order')
             ->get(['slug', 'updated_at']);
 
+        $guides = config('guides', []);
+
         return response()
-            ->view('sitemap', compact('courses'))
+            ->view('sitemap', compact('courses', 'guides'))
             ->header('Content-Type', 'application/xml');
     }
 }
