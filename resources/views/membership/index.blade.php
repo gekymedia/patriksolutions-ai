@@ -89,7 +89,7 @@
                         <div class="membership-price">$19<span>/mo</span></div>
                     </div>
                     <ul class="membership-features">
-                        <li class="included"><i class="fas fa-check text-success"></i> All AI courses</li>
+                        <li class="included"><i class="fas fa-check text-success"></i> AI Fundamentals + Business courses</li>
                         <li class="included"><i class="fas fa-check text-success"></i> AI tutor on every lesson</li>
                         <li class="included"><i class="fas fa-check text-success"></i> Progress tracking</li>
                         <li class="included"><i class="fas fa-check text-success"></i> 50 AI tutor questions/day</li>
@@ -124,7 +124,7 @@
                         <div class="membership-price">$49<span>/mo</span></div>
                     </div>
                     <ul class="membership-features">
-                        <li class="included"><i class="fas fa-check text-success"></i> Everything in AI Member</li>
+                        <li class="included"><i class="fas fa-check text-success"></i> All courses, incl. Advanced AI Strategies</li>
                         <li class="included"><i class="fas fa-check text-success"></i> 100 AI tutor questions/day</li>
                         <li class="included"><i class="fas fa-check text-success"></i> Priority AI responses</li>
                         <li class="included"><i class="fas fa-check text-success"></i> 1-on-1 monthly coaching call</li>
