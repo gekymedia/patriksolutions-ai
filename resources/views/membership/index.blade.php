@@ -61,17 +61,17 @@
                         <div class="membership-price">$0<span>/mo</span></div>
                     </div>
                     <ul class="membership-features">
-                        <li class="included"><i class="fas fa-check text-success"></i> Browse course catalog</li>
-                        <li class="included"><i class="fas fa-check text-success"></i> Create a student account</li>
-                        <li><i class="fas fa-times text-muted"></i> Enroll in courses</li>
-                        <li><i class="fas fa-times text-muted"></i> AI tutor access</li>
-                        <li><i class="fas fa-times text-muted"></i> Progress tracking</li>
+                        <li class="included"><i class="fas fa-check text-success"></i> Full <strong>AI Fundamentals</strong> course — free</li>
+                        <li class="included"><i class="fas fa-check text-success"></i> Progress tracking on your course</li>
+                        <li class="included"><i class="fas fa-check text-success"></i> Preview lessons from every course</li>
+                        <li><i class="fas fa-times text-muted"></i> AI for Business &amp; Advanced courses</li>
+                        <li><i class="fas fa-times text-muted"></i> AI tutor on every lesson</li>
                     </ul>
                     @if(auth()->check() && $currentPlan === 'free')
                         <button class="ai-btn ai-btn-dark w-100 justify-content-center" disabled>Current plan</button>
                     @elseif(! auth()->check())
-                        <a href="{{ route('register', ['redirect' => route('membership.index')]) }}" class="ai-btn ai-btn-dark w-100 justify-content-center">
-                            <i class="fas fa-user-plus"></i> Sign up free
+                        <a href="{{ route('register', ['redirect' => route('courses.index')]) }}" class="ai-btn ai-btn-dark w-100 justify-content-center">
+                            <i class="fas fa-user-plus"></i> Start free
                         </a>
                     @endif
                 </div>
@@ -102,11 +102,11 @@
                         @if($stripeConfigured && auth()->check())
                             <button type="button" class="ai-btn ai-btn-primary w-100 justify-content-center"
                                 onclick="startCheckout('pro', '{{ config('cashier.key') }}', '{{ $intent->client_secret }}')">
-                                <i class="fas fa-credit-card"></i> Join — $19/mo
+                                <i class="fas fa-credit-card"></i> Start AI Member — $19/mo
                             </button>
-                        @elseif($stripeConfigured)
-                            <a href="{{ route('login', ['redirect' => route('membership.index', ['plan' => 'pro'])]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
-                                <i class="fas fa-sign-in-alt"></i> Log in to join
+                        @elseif(! auth()->check())
+                            <a href="{{ route('register', ['redirect' => route('membership.index', ['plan' => 'pro'])]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
+                                <i class="fas fa-arrow-right"></i> Start AI Member — $19/mo
                             </a>
                         @else
                             <button class="ai-btn ai-btn-primary w-100 justify-content-center" disabled>Coming soon</button>
@@ -137,11 +137,11 @@
                         @if($stripeConfigured && auth()->check())
                             <button type="button" class="ai-btn ai-btn-primary w-100 justify-content-center"
                                 onclick="startCheckout('elite', '{{ config('cashier.key') }}', '{{ $intent->client_secret }}')">
-                                <i class="fas fa-crown"></i> Join — $49/mo
+                                <i class="fas fa-crown"></i> Start AI Pro — $49/mo
                             </button>
-                        @elseif($stripeConfigured)
-                            <a href="{{ route('login', ['redirect' => route('membership.index', ['plan' => 'elite'])]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
-                                <i class="fas fa-sign-in-alt"></i> Log in to join
+                        @elseif(! auth()->check())
+                            <a href="{{ route('register', ['redirect' => route('membership.index', ['plan' => 'elite'])]) }}" class="ai-btn ai-btn-primary w-100 justify-content-center">
+                                <i class="fas fa-arrow-right"></i> Start AI Pro — $49/mo
                             </a>
                         @else
                             <button class="ai-btn ai-btn-primary w-100 justify-content-center" disabled>Coming soon</button>

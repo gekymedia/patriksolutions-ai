@@ -51,6 +51,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
+                            <i class="fas fa-circle-info me-1"></i> About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" href="{{ route('faq') }}">
+                            <i class="fas fa-circle-question me-1"></i> FAQ
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('membership.*') ? 'active' : '' }}" href="{{ route('membership.index') }}" style="{{ !auth()->check() || auth()->user()->isFree() ? 'background: rgba(251,191,36,0.15); border-radius: 8px;' : '' }}">
                             <i class="fas fa-crown me-1" style="color: #fbbf24;"></i> Become a Member
                         </a>
@@ -118,13 +128,61 @@
     @hasSection('footer')
         @yield('footer')
     @else
+    @php
+        $wa = config('platform.contact.whatsapp');
+        $waLabel = config('platform.contact.whatsapp_label') ?: $wa;
+        $contactEmail = config('platform.contact.email');
+    @endphp
     <footer class="ai-footer mt-auto">
-        <div class="container text-center">
-            <p class="mb-0">&copy; {{ date('Y') }} {{ config('platform.parent_brand') }} — AI Learning Platform</p>
-            <p class="mb-0 mt-2">
-                <a href="{{ config('platform.parent_url') }}" class="text-white-50 text-decoration-none">
-                    <i class="fas fa-arrow-left me-1"></i> Back to {{ config('platform.parent_brand') }}
-                </a>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <img src="{{ asset('assets/logos/patrick_logo.png') }}" alt="{{ config('platform.name') }} logo" width="32" height="32" style="border-radius: 8px;">
+                        <span class="fw-bold text-white">{{ config('platform.name') }}</span>
+                    </div>
+                    <p class="small mb-0" style="color: rgba(255,255,255,0.6); max-width: 32ch;">
+                        {{ config('platform.entity_sentence') }}
+                    </p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white fw-bold mb-3">Learn</h6>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a href="{{ route('courses.index') }}" class="text-white-50 text-decoration-none">Courses</a></li>
+                        <li><a href="{{ route('membership.index') }}" class="text-white-50 text-decoration-none">Membership</a></li>
+                        <li><a href="{{ route('faq') }}" class="text-white-50 text-decoration-none">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white fw-bold mb-3">Company</h6>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a href="{{ route('about') }}" class="text-white-50 text-decoration-none">About</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li><a href="{{ config('platform.parent_url') }}" class="text-white-50 text-decoration-none">Patrik Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white fw-bold mb-3">Legal</h6>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a href="{{ route('terms') }}" class="text-white-50 text-decoration-none">Terms of Service</a></li>
+                        <li><a href="{{ route('privacy') }}" class="text-white-50 text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="{{ route('refund') }}" class="text-white-50 text-decoration-none">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white fw-bold mb-3">Contact</h6>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a href="mailto:{{ $contactEmail }}" class="text-white-50 text-decoration-none"><i class="fas fa-envelope me-1"></i> Email</a></li>
+                        @if($wa)
+                        <li><a href="https://wa.me/{{ $wa }}" class="text-white-50 text-decoration-none" rel="noopener" target="_blank"><i class="fab fa-whatsapp me-1"></i> WhatsApp</a></li>
+                        @endif
+                        <li><a href="{{ config('platform.instructor.youtube') }}" class="text-white-50 text-decoration-none" rel="noopener" target="_blank"><i class="fab fa-youtube me-1"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <p class="mb-0 small text-center" style="color: rgba(255,255,255,0.5);">
+                &copy; {{ date('Y') }} {{ config('platform.legal.entity') }}. All rights reserved.
             </p>
         </div>
     </footer>

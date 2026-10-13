@@ -4,6 +4,9 @@
 @section('og_type', 'article')
 @section('canonical_url', route('courses.show', $course))
 
+@php
+    $coursePrice = $course->isFreePlan() ? 0 : ($course->requiredPlan() === 'pro' ? config('platform.prices.pro') : config('platform.prices.elite'));
+@endphp
 @push('structured_data')
 <script type="application/ld+json">
 {
@@ -17,7 +20,20 @@
         "name": "{{ config('platform.parent_brand') }}",
         "url": "{{ config('platform.url') }}"
     },
+    "instructor": {
+        "@type": "Person",
+        "name": @json(config('platform.instructor.name')),
+        "jobTitle": @json(config('platform.instructor.role'))
+    },
     "educationalLevel": @json(ucfirst($course->level)),
+    "offers": {
+        "@type": "Offer",
+        "category": @json($course->tierLabel()),
+        "price": "{{ $coursePrice }}",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": @json($course->isFreePlan() ? route('courses.show', $course) : route('membership.index'))
+    },
     "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": "online",
@@ -47,6 +63,21 @@
                 @endunless
                 <h1 class="fw-bold mt-2">{{ $course->name }}</h1>
                 <p class="text-muted">{{ $course->description }}</p>
+                <div class="d-flex flex-wrap gap-3 small text-muted mb-1">
+                    <span><i class="fas fa-signal me-1" style="color: var(--ai-primary);"></i> {{ ucfirst($course->level) }}</span>
+                    <span><i class="fas fa-book-open me-1" style="color: var(--ai-primary);"></i> {{ $course->lessons->count() }} lessons</span>
+                    <span><i class="fas fa-infinity me-1" style="color: var(--ai-primary);"></i> Self-paced</span>
+                    <span>
+                        <i class="fas fa-tag me-1" style="color: var(--ai-primary);"></i>
+                        @if($course->isFreePlan())
+                            Free to enroll
+                        @elseif($course->requiredPlan() === 'pro')
+                            Included with AI Member (${{ config('platform.prices.pro') }}/mo)
+                        @else
+                            Included with AI Pro (${{ config('platform.prices.elite') }}/mo)
+                        @endif
+                    </span>
+                </div>
                 @if($isEnrolled)
                     <div class="mt-3">
                         <div class="d-flex justify-content-between small mb-1"><span>Progress</span><span>{{ $progressPercent }}%</span></div>

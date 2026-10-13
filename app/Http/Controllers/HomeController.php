@@ -16,6 +16,9 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('home', compact('courses'));
+        // The free, beginner course is the primary "start here" call to action.
+        $freeCourse = $courses->first(fn (Course $c) => $c->isFreePlan());
+
+        return view('home', compact('courses', 'freeCourse'));
     }
 }
