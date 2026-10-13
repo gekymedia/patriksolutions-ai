@@ -51,6 +51,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('guides.*') ? 'active' : '' }}" href="{{ route('guides.index') }}">
+                            <i class="fas fa-book-open me-1"></i> Guides
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">
                             <i class="fas fa-circle-info me-1"></i> About
                         </a>
@@ -149,6 +154,7 @@
                     <h6 class="text-white fw-bold mb-3">Learn</h6>
                     <ul class="list-unstyled small d-grid gap-2 mb-0">
                         <li><a href="{{ route('courses.index') }}" class="text-white-50 text-decoration-none">Courses</a></li>
+                        <li><a href="{{ route('guides.index') }}" class="text-white-50 text-decoration-none">Guides</a></li>
                         <li><a href="{{ route('membership.index') }}" class="text-white-50 text-decoration-none">Membership</a></li>
                         <li><a href="{{ route('faq') }}" class="text-white-50 text-decoration-none">FAQ</a></li>
                     </ul>

@@ -27,6 +27,18 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>{{ route('guides.index') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    @foreach(($guides ?? []) as $slug => $guide)
+    <url>
+        <loc>{{ route('guides.show', $slug) }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    @endforeach
+    <url>
         <loc>{{ route('contact') }}</loc>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>

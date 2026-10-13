@@ -16,8 +16,14 @@
 - Courses: {{ route('courses.index') }}
 - Membership & pricing: {{ route('membership.index') }}
 - About & instructor: {{ route('about') }}
+- Guides (free articles): {{ route('guides.index') }}
 - FAQ: {{ route('faq') }}
 - Contact: {{ route('contact') }}
+
+## Guides
+@foreach(config('guides', []) as $slug => $g)
+- {{ $g['title'] }}: {{ route('guides.show', $slug) }}
+@endforeach
 
 ## Policies
 - Terms of Service: {{ route('terms') }}
