@@ -26,6 +26,7 @@ Route::get('/courses/{course:slug}/lessons/{lesson}', [LessonController::class, 
 
 // Static / informational pages (SEO + AEO + trust)
 Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/make-money-with-ai', [PageController::class, 'makeMoney'])->name('make-money');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');

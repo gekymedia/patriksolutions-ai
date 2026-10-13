@@ -51,6 +51,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('make-money') ? 'active' : '' }}" href="{{ route('make-money') }}">
+                            <i class="fas fa-sack-dollar me-1"></i> Make Money
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('guides.*') ? 'active' : '' }}" href="{{ route('guides.index') }}">
                             <i class="fas fa-book-open me-1"></i> Guides
                         </a>
@@ -153,6 +158,7 @@
                 <div class="col-6 col-lg-2">
                     <h6 class="text-white fw-bold mb-3">Learn</h6>
                     <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a href="{{ route('make-money') }}" class="text-white-50 text-decoration-none">Make Money With AI</a></li>
                         <li><a href="{{ route('courses.index') }}" class="text-white-50 text-decoration-none">Courses</a></li>
                         <li><a href="{{ route('guides.index') }}" class="text-white-50 text-decoration-none">Guides</a></li>
                         <li><a href="{{ route('lead.show') }}" class="text-white-50 text-decoration-none">Free AI Kit</a></li>

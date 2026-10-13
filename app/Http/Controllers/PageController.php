@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+
 class PageController extends Controller
 {
     public function about()
     {
         return view('pages.about');
+    }
+
+    /**
+     * Dedicated "Make Money With AI" track / landing (audit S2).
+     */
+    public function makeMoney()
+    {
+        $courses = Course::where('is_published', true)
+            ->orderBy('sort_order')
+            ->withCount('lessons')
+            ->get();
+
+        return view('pages.make-money', [
+            'courses' => $courses,
+            'faqs'    => array_slice(self::faqs(), 0, 4),
+        ]);
     }
 
     public function contact()

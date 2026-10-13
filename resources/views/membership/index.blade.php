@@ -151,6 +151,13 @@
             </div>
         </div>
 
+        <div class="text-center mt-4">
+            <p class="d-inline-flex align-items-center gap-2 px-4 py-2 mb-0" style="background: rgba(99,102,241,0.08); border:1px solid var(--ai-border); border-radius: 999px;">
+                <i class="fas fa-shield-heart" style="color: var(--ai-primary);"></i>
+                <span class="small"><strong>{{ config('platform.legal.refund_days') }}-day money-back guarantee</strong> on your first payment · Cancel anytime · <a href="{{ route('refund') }}">Refund Policy</a></span>
+            </p>
+        </div>
+
         @if(auth()->check() && $currentPlan !== 'free')
             <div class="ai-card p-4 mt-4">
                 <h4 class="fw-bold mb-3"><i class="fas fa-cog me-2" style="color: var(--ai-primary);"></i>Manage Subscription</h4>

@@ -17,6 +17,11 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>{{ route('make-money') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
         <loc>{{ route('about') }}</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>

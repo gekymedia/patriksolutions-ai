@@ -292,6 +292,9 @@
         <h2 class="fw-bold mb-3" style="font-size: 2rem;">Start making money with AI today</h2>
         <p class="mx-auto mb-4" style="max-width: 540px;">Create a free account and begin the AI Fundamentals course — no card required.</p>
         <a href="{{ $startUrl }}" class="ai-btn ai-btn-primary btn-lg"><i class="fas fa-play"></i> Start the Free AI Course</a>
+        <p class="small mt-3 mb-0" style="color: rgba(255,255,255,0.75);">
+            <i class="fas fa-shield-heart me-1"></i> Free to start · Paid plans have a {{ config('platform.legal.refund_days') }}-day money-back guarantee · Cancel anytime
+        </p>
     </div>
 </section>
 @endsection

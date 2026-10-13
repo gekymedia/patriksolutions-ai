@@ -147,8 +147,7 @@ return [
             'APP_SEO_KEYWORDS',
             'make money with AI, AI courses, AI for business, AI skills, AI training Ghana, AI for the diaspora, learn AI online, Patrik Solutions AI'
         ),
-        // TODO: replace with a real 1200x630 share image at public/assets/og/share.png (audit item S6).
-        'og_image' => env('APP_OG_IMAGE', 'assets/logos/patrick_logo.png'),
+        'og_image' => env('APP_OG_IMAGE', 'assets/og/share.png'),
         'twitter_handle' => env('TWITTER_HANDLE'),
     ],
 

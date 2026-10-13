@@ -13,6 +13,7 @@
 
 ## Key pages
 - Home: {{ config('platform.url') }}/
+- Make Money With AI (track): {{ route('make-money') }}
 - Courses: {{ route('courses.index') }}
 - Membership & pricing: {{ route('membership.index') }}
 - About & instructor: {{ route('about') }}
